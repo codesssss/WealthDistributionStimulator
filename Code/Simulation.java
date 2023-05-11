@@ -34,7 +34,7 @@ public class Simulation {
         todayCollectNum++;
     }
 
-    public int getDirection(){
+    public int getDirection(int row,int column, int vision ){
         return 90;
     }
 

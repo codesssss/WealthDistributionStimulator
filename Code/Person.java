@@ -57,9 +57,8 @@ public class Person extends Thread {
         age++;
 
     }
-    public int getVision(){
-        return vision;
-    }
+
+
 
     public void collectGrain(){
 
