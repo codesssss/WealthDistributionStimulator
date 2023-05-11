@@ -2,7 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fdd1d441-393e-4f34-8e86-c93bb7ddbb60" name="Changes" comment="update class name and function name in proposal">
-      <change afterPath="$PROJECT_DIR$/Code/Params.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Code/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/Code/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Code/Patch.java" beforeDir="false" afterPath="$PROJECT_DIR$/Code/Patch.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Code/Person.java" beforeDir="false" afterPath="$PROJECT_DIR$/Code/Person.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Code/Simulation.java" beforeDir="false" afterPath="$PROJECT_DIR$/Code/Simulation.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,7 +58,7 @@
       <option name="presentableId" value="Default" />
       <updated>1683617243100</updated>
       <workItem from="1683617245513" duration="2859000" />
-      <workItem from="1683791909470" duration="10723000" />
+      <workItem from="1683791909470" duration="11169000" />
     </task>
     <task id="LOCAL-00001" summary="update class name and function name in proposal">
       <created>1683630442052</created>
