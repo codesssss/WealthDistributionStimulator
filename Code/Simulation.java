@@ -11,12 +11,19 @@ public class Simulation {
     public Simulation(){
         Land = new ArrayList<>();
         initializeGrid();
-
     }
 
     public void initializeGrid(){
-
+        ArrayList<Integer> Temp = new ArrayList<>();
+        for(int i = 0; i < Params.ROW_MAX;i++){
+            for(int j = 0; j< Params.COLUMN_MAX;j++){
+                Temp.add((int)(Math.random()*Params.GRAIN_CAPACITY_MAX));
+            }
+            Land.add(Temp);
+            Temp.clear();
+        }
     }
+
 //    public void initializePeople(){
 //
 //    }

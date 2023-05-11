@@ -12,13 +12,26 @@ public class Person extends Thread {
     public int age;
     public int column;
     public int row;
+    public Simulation simulation;
+    public int direction;
 
     public Person(){
         initPersonInformation();
         age = 0;
         column = (int)(Math.random()*Params.COLUMN_MAX);
         row = (int)(Math.random()*Params.ROW_MAX);
+        direction = 0;
     }
+
+    public Person(Simulation simulation){
+        this.simulation = simulation;
+        initPersonInformation();
+        age = 0;
+        column = (int)(Math.random()*Params.COLUMN_MAX);
+        row = (int)(Math.random()*Params.ROW_MAX);
+        direction = 0;
+    }
+
     public void initPersonInformation() {
         age = 0;
 
@@ -42,6 +55,7 @@ public class Person extends Thread {
 
     public void move(){
         age++;
+
     }
     public int getVision(){
         return vision;
@@ -53,5 +67,6 @@ public class Person extends Thread {
     }
     public void reproduce(){
         wealth = wealth-metabolism;
+
     }
 }
