@@ -5,51 +5,54 @@ import java.util.ArrayList;
  * @Date 2023/5/11 18:18
  **/
 public class Simulation {
-    ArrayList<ArrayList<Integer>> Land;
+    ArrayList<ArrayList<Integer>> land;
     int todayCollectNum = 0;
+    ArrayList<Person> people;
 
-    public Simulation(){
-        Land = new ArrayList<>();
+    public Simulation() {
+        land = new ArrayList<>();
         initializeGrid();
     }
 
-    public void initializeGrid(){
-        ArrayList<Integer> Temp = new ArrayList<>();
-        for(int i = 0; i < Params.ROW_MAX;i++){
-            for(int j = 0; j< Params.COLUMN_MAX;j++){
-                Temp.add((int)(Math.random()*Params.GRAIN_CAPACITY_MAX));
+    public void initializeGrid() {
+        ArrayList<Integer> temp = new ArrayList<>();
+        for (int i = 0; i < Params.ROW_MAX; i++) {
+            for (int j = 0; j < Params.COLUMN_MAX; j++) {
+                temp.add((int) (Math.random() * Params.GRAIN_CAPACITY_MAX));
             }
-            Land.add(Temp);
-            Temp.clear();
+            land.add(temp);
+            temp.clear();
         }
     }
 
-//    public void initializePeople(){
+    //    public void initializePeople(){
 //
 //    }
-    public void update(){
+    public void update() {
 
     }
-    public void increaseTodayCollect(){
+
+    synchronized public void increaseTodayCollect() {
         todayCollectNum++;
     }
 
-    public int getDirection(int row,int column, int vision ){
+    public int getDirection(int row, int column, int vision) {
         return 90;
     }
 
-    public int consumeGrain(int row, int column){
+    public int consumeGrain(int row, int column) {
 
-        int grainNum = Land.get(row).get(column);
-        Land.get(row).set(column,0);
+        int grainNum = land.get(row).get(column);
+        land.get(row).set(column, 0);
         return grainNum;
 
     }
 
-    public void calculateLorenzCurve(){
+    public void calculateLorenzCurve() {
 
     }
-    public void calculateGiniIndex(){
+
+    public void calculateGiniIndex() {
 
     }
 

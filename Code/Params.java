@@ -21,6 +21,12 @@ public class Params {
 
     public static final int ROW_MAX = 20;
 
+    public static int randomInt( int min, int max) {
+        // Generates a random int between min and max including both
+        int range = max-min;
+        return (int)(Math.random() * (range+1) + min);
+    }
+
 
 
 
