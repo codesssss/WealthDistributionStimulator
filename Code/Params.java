@@ -21,6 +21,14 @@ public class Params {
 
     public static final int ROW_MAX = 20;
 
+    public static final int UP = 0;
+
+    public static final int LEFT = 90;
+
+    public static final int DOWN = 180;
+
+    public static final int RIGHT = 270;
+
     public static int randomInt( int min, int max) {
         // Generates a random int between min and max including both
         int range = max-min;
