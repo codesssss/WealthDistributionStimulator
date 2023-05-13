@@ -7,8 +7,7 @@ import java.util.ArrayList;
 public class Main {
     ArrayList<Person> people;
 
-    public static void mian(){
-
+    public static void main(String[] args) {
 
     }
 }

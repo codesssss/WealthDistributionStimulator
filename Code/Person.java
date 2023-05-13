@@ -5,14 +5,14 @@ import java.util.ArrayList;
  * @Date 2023/5/11 18:18
  **/
 public class Person {
-    public int wealth;
-    public int metabolism;
-    public int lifeExpectancy;
-    public int vision;
-    public int age;
-    public int column;
-    public int row;
-    public int direction;
+    private int wealth;
+    private int metabolism;
+    private int lifeExpectancy;
+    private int vision;
+    private int age;
+    private int column;
+    private int row;
+    private int direction;
 
     public Person(){
         randomGeneratePersonInformation();
@@ -64,5 +64,53 @@ public class Person {
     }
     public void reproduce(){
 
+    }
+
+    public int getWealth() {
+        return wealth;
+    }
+
+    public void setWealth(int wealth) {
+        this.wealth = wealth;
+    }
+
+    public int getMetabolism() {
+        return metabolism;
+    }
+
+    public void setMetabolism(int metabolism) {
+        this.metabolism = metabolism;
+    }
+
+    public int getLifeExpectancy() {
+        return lifeExpectancy;
+    }
+
+    public void setLifeExpectancy(int lifeExpectancy) {
+        this.lifeExpectancy = lifeExpectancy;
+    }
+
+    public int getVision() {
+        return vision;
+    }
+
+    public void setVision(int vision) {
+        this.vision = vision;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public int getDirection() {
+        return direction;
+    }
+
+    public void setDirection(int direction) {
+        this.direction = direction;
     }
 }

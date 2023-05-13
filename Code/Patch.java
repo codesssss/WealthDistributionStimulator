@@ -26,7 +26,8 @@ public class Patch{
         int totalLeft = 0;
         int row = person.getRow();
         int column = person.getColumn();
-        int vision = person.vision;
+        int vision = person.getVision();
+
         for(int i = 0; i < vision+1 ; i++ ){
             if(column + i < Params.COLUMN_MAX && column < Params.COLUMN_MAX){
                 totalRight += land.get(row).get(column + i);
@@ -41,6 +42,7 @@ public class Patch{
                 totalDown += land.get(row + i).get(column);
             }
         }
+
         if (totalRight >= totalLeft && totalRight >= totalUp && totalRight >= totalDown) {
             person.collectWealth(consumeGrain(row, column+1 ));
             person.setColumn(column + 1);
@@ -93,6 +95,7 @@ public class Patch{
     public void growGrain(){
         int grainCapacity = 0;
         int newGrainCapacity = 0 ;
+
         for(int i = 0 ;i < Params.ROW_MAX; i++){
             for(int j = 0; j < Params.COLUMN_MAX; j++){
                 grainCapacity = this.land.get(i).get(j);
