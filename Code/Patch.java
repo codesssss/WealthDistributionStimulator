@@ -102,7 +102,7 @@ public class Patch{
             for(int j = 0; j < Params.COLUMN_MAX; j++){
                 grainCapacity = this.land.get(i).get(j);
                 if (grainCapacity<Params.GRAIN_CAPACITY_MAX){
-                    newGrainCapacity = (int) ( Math.random() * (Params.NEW_GRAIN_MAX - grainCapacity));
+                    newGrainCapacity = Params.randomInt(0,(int)(Params.GRAIN_CAPACITY_MAX - grainCapacity));
                     this.land.get(i).set(j,newGrainCapacity);
                 }
             }
