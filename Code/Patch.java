@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class Patch{
     ArrayList<Person> people;
     ArrayList<ArrayList<Integer>> land;
-    int grainCapacity;
+
 
 
     public Patch() {
@@ -96,7 +96,18 @@ public class Patch{
 
 
     public void growGrain(){
-        grainCapacity = (int) ( Math.random() * Params.NEW_GRAIN_MAX);
+        int grainCapacity = 0;
+        int newGrainCapacity = 0 ;
+        for(int i = 0 ;i < Params.ROW_MAX; i++){
+            for(int j = 0; j < Params.COLUMN_MAX; j++){
+                grainCapacity = this.land.get(i).get(j);
+                if (grainCapacity<Params.GRAIN_CAPACITY_MAX){
+                    newGrainCapacity = (int) ( Math.random() * (Params.NEW_GRAIN_MAX - grainCapacity));
+                    this.land.get(i).set(j,newGrainCapacity);
+                }
+            }
+
+        }
     }
 
 
