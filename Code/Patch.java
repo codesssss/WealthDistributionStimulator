@@ -42,25 +42,20 @@ public class Patch{
             }
         }
         if (totalRight >= totalLeft && totalRight >= totalUp && totalRight >= totalDown) {
-
-            person.collectWealth(land.get(row).get(column + 1));
-            land.get(row).set(column + 1,0);
+            person.collectWealth(consumeGrain(row, column+1 ));
             person.setColumn(column + 1);
 
         }
         if (totalLeft >= totalUp && totalLeft >= totalDown) {
-            person.collectWealth(land.get(row).get(column - 1));
-            land.get(row).set(column - 1,0);
+            person.collectWealth(consumeGrain(row , column - 1 ));
             person.setColumn(column - 1);
         }
         if (totalUp >= totalDown) {
-            person.collectWealth(land.get(row - 1).get(column));
-            land.get(row - 1).set(column,0);
+            person.collectWealth(consumeGrain(row - 1 , column ));
             person.setRow(row - 1);
         }
         else {
-            person.collectWealth(land.get(row + 1).get(column));
-            land.get(row + 1).set(column,0);
+            person.collectWealth(consumeGrain(row + 1 , column ));
             person.setRow(row + 1);
         }
 
@@ -87,8 +82,8 @@ public class Patch{
 
     public int consumeGrain(int row, int column) {
 
-        int grainNum = land.get(row).get(column);
-        land.get(row).set(column, 0);
+        int grainNum = this.land.get(row).get(column);
+        this.land.get(row).set(column, 0);
         return grainNum;
 
     }
