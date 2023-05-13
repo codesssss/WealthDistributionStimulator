@@ -30,7 +30,7 @@ public class Person {
         vision = Params.randomInt(1, Params.VISION_MAX);
     }
 
-    public void updatePersonInfo(){
+    public void updateNewPersonInfo(){
         this.wealth -= metabolism;
         age++;
         if(age > lifeExpectancy || wealth < 0){
@@ -39,11 +39,18 @@ public class Person {
 
     }
 
-    public void move(int direction){
-
-
-
+    public void collectWealth(int newWealth){
+        this.wealth += newWealth;
     }
+
+    public void setColumn(int newColumn){
+        this.column = newColumn;
+    }
+
+    public void setRow(int newRow){
+        this.row = newRow;
+    }
+
     public int getColumn(){
         return column;
     }

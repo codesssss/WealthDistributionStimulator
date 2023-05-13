@@ -19,7 +19,7 @@ public class Patch{
 
     }
 
-    public void  determineDirection(Person person){
+    public void  move(Person person){
         int totalUp = 0;
         int totalRight = 0;
         int totalDown = 0;
@@ -28,9 +28,40 @@ public class Patch{
         int column = person.getColumn();
         int vision = person.vision;
         for(int i = 0; i < vision+1 ; i++ ){
-            if(row + i < Params.ROW_MAX && column < Params.COLUMN_MAX){
-             totalRight += land.get(row).get(column);
+            if(column + i < Params.COLUMN_MAX && column < Params.COLUMN_MAX){
+                totalRight += land.get(row).get(column + i);
             }
+            if(column - i > 0  && row < Params.ROW_MAX){
+                totalLeft += land.get(row ).get(column - i);
+            }
+            if(row - i > 0 && column < Params.COLUMN_MAX){
+                totalUp += land.get(row - i).get(column);
+            }
+            if(row + i < Params.ROW_MAX && column < Params.COLUMN_MAX) {
+                totalDown += land.get(row + i).get(column);
+            }
+        }
+        if (totalRight >= totalLeft && totalRight >= totalUp && totalRight >= totalDown) {
+
+            person.collectWealth(land.get(row).get(column + 1));
+            land.get(row).set(column + 1,0);
+            person.setColumn(column + 1);
+
+        }
+        if (totalLeft >= totalUp && totalLeft >= totalDown) {
+            person.collectWealth(land.get(row).get(column - 1));
+            land.get(row).set(column - 1,0);
+            person.setColumn(column - 1);
+        }
+        if (totalUp >= totalDown) {
+            person.collectWealth(land.get(row - 1).get(column));
+            land.get(row - 1).set(column,0);
+            person.setRow(row - 1);
+        }
+        else {
+            person.collectWealth(land.get(row + 1).get(column));
+            land.get(row + 1).set(column,0);
+            person.setRow(row + 1);
         }
 
     }
