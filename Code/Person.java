@@ -42,6 +42,14 @@ public class Person {
     public void move(int direction){
 
 
+
+    }
+    public int getColumn(){
+        return column;
+    }
+
+    public int getRow(){
+        return row;
     }
 
     public void collectGrain(int num){

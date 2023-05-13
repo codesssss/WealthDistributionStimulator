@@ -8,6 +8,8 @@ public class Patch{
     ArrayList<Person> people;
     ArrayList<ArrayList<Integer>> land;
     int grainCapacity;
+
+
     public Patch() {
 
         this.land = new ArrayList<>();
@@ -16,6 +18,23 @@ public class Patch{
         initializePeople();
 
     }
+
+    public void  determineDirection(Person person){
+        int totalUp = 0;
+        int totalRight = 0;
+        int totalDown = 0;
+        int totalLeft = 0;
+        int row = person.getRow();
+        int column = person.getColumn();
+        int vision = person.vision;
+        for(int i = 0; i < vision+1 ; i++ ){
+            if(row + i < Params.ROW_MAX && column < Params.COLUMN_MAX){
+             totalRight += land.get(row).get(column);
+            }
+        }
+
+    }
+
     public void initializeGrid() {
         ArrayList<Integer> temp = new ArrayList<>();
         for (int i = 0; i < Params.ROW_MAX; i++) {
@@ -32,6 +51,8 @@ public class Patch{
             people.add(temp);
         }
     }
+
+
 
     public int consumeGrain(int row, int column) {
 
