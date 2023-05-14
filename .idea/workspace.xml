@@ -5,9 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fdd1d441-393e-4f34-8e86-c93bb7ddbb60" name="Changes" comment="update class name and function name in proposal">
-      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/Code/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Code/Patch.java" beforeDir="false" afterPath="$PROJECT_DIR$/Code/Patch.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Code/Person.java" beforeDir="false" afterPath="$PROJECT_DIR$/Code/Person.java" afterDir="false" />
     </list>
@@ -45,19 +43,6 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "/Users/danbao/Dropbox/UNIMELB/assignment_2023S1/SWEN90004/Assignment_2/WealthDistributionStimulator",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "vue.rearranger.settings.migration": "true"
-  }
-}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/Code" />
@@ -125,6 +110,7 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="update class name and function name in proposal" />

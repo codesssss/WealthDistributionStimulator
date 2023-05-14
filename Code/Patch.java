@@ -63,6 +63,14 @@ public class Patch{
 
     }
 
+    public int findTheBiggestWealth(){
+        int maxWealth = 0;
+        for(int i =0 ; i < Params.POPULATION ; i++){
+          maxWealth = Math.max(maxWealth, people.get(i).getWealth());
+        }
+        return  maxWealth;
+    }
+
     public void initializeGrid() {
         ArrayList<Integer> temp = new ArrayList<>();
         for (int i = 0; i < Params.ROW_MAX; i++) {

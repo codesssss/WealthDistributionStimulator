@@ -14,6 +14,13 @@ public class Person {
     private int row;
     private int direction;
 
+    private wealthClass myWealthClass;
+    public enum wealthClass {// 0 for poor; 1 for middle class; 2 for rich
+        POOR,
+        MIDDLE,
+        RICH
+    }
+
     public Person(){
         randomGeneratePersonInformation();
         age = 0;
@@ -41,6 +48,20 @@ public class Person {
 
     public void collectWealth(int newWealth){
         this.wealth += newWealth;
+    }
+
+    public void updateClass(int mostWealth){
+        if(this.wealth < (int)( mostWealth / 3 ) ){
+
+            this.myWealthClass = wealthClass.POOR;
+        }
+        else if ( this.wealth >= (int)(mostWealth / 3 ) && this.wealth < (int)(mostWealth / 3 * 2 )){
+            this.myWealthClass = wealthClass.MIDDLE;
+        }
+        else {
+            this.myWealthClass = wealthClass.RICH;
+        }
+
     }
 
     public void setColumn(int newColumn){
