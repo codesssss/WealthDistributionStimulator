@@ -5,62 +5,51 @@ import java.util.ArrayList;
  * @Date 2023/5/11 18:18
  **/
 public class Patch{
-    ArrayList<Person> people;
-    ArrayList<ArrayList<Integer>> land;
-
-
+    private ArrayList<Person> people;
+    private ArrayList<ArrayList<Integer>> land;
 
     public Patch() {
-
         this.land = new ArrayList<>();
         initializeGrid();
         this.people = new ArrayList<>();
         initializePeople();
-
     }
 
-    public void  move(Person person){
-        int totalUp = 0;
-        int totalRight = 0;
-        int totalDown = 0;
-        int totalLeft = 0;
+    private boolean isWithinBounds(int index, int max) {
+        return index >= 0 && index < max;
+    }
+
+    public synchronized void move(Person person){
+        int[] totalDirection = new int[4];
+        int[] dx = {0, 0, -1, 1};
+        int[] dy = {1, -1, 0, 0};
         int row = person.getRow();
         int column = person.getColumn();
         int vision = person.getVision();
 
-        for(int i = 0; i < vision+1 ; i++ ){
-            if(column + i < Params.COLUMN_MAX && column < Params.COLUMN_MAX){
-                totalRight += land.get(row).get(column + i);
-            }
-            if(column - i > 0  && row < Params.ROW_MAX){
-                totalLeft += land.get(row ).get(column - i);
-            }
-            if(row - i > 0 && column < Params.COLUMN_MAX){
-                totalUp += land.get(row - i).get(column);
-            }
-            if(row + i < Params.ROW_MAX && column < Params.COLUMN_MAX) {
-                totalDown += land.get(row + i).get(column);
+        for(int i = 0; i <= vision; i++){
+            for(int direction = 0; direction < 4; direction++){
+                int newRow = row + dx[direction] * i;
+                int newColumn = column + dy[direction] * i;
+                if(isWithinBounds(newRow, Params.ROW_MAX) && isWithinBounds(newColumn, Params.COLUMN_MAX)){
+                    totalDirection[direction] += land.get(newRow).get(newColumn);
+                }
             }
         }
 
-        if (totalRight >= totalLeft && totalRight >= totalUp && totalRight >= totalDown) {
-            person.collectWealth(consumeGrain(row, column+1 ));
-            person.setColumn(column + 1);
-
-        }
-        if (totalLeft >= totalUp && totalLeft >= totalDown) {
-            person.collectWealth(consumeGrain(row , column - 1 ));
-            person.setColumn(column - 1);
-        }
-        if (totalUp >= totalDown) {
-            person.collectWealth(consumeGrain(row - 1 , column ));
-            person.setRow(row - 1);
-        }
-        else {
-            person.collectWealth(consumeGrain(row + 1 , column ));
-            person.setRow(row + 1);
+        int maxDirection = 0;
+        for(int i = 1; i < 4; i++){
+            if(totalDirection[i] > totalDirection[maxDirection]){
+                maxDirection = i;
+            }
         }
 
+        int newRow = row + dx[maxDirection];
+        int newColumn = column + dy[maxDirection];
+        if(isWithinBounds(newRow, Params.ROW_MAX) && isWithinBounds(newColumn, Params.COLUMN_MAX)){
+            person.collectWealth(consumeGrain(newRow, newColumn));
+            person.setPosition(newRow,newColumn);
+        }
     }
 
     public int findTheBiggestWealth(){
@@ -72,15 +61,15 @@ public class Patch{
     }
 
     public void initializeGrid() {
-        ArrayList<Integer> temp = new ArrayList<>();
         for (int i = 0; i < Params.ROW_MAX; i++) {
+            ArrayList<Integer> temp = new ArrayList<>();
             for (int j = 0; j < Params.COLUMN_MAX; j++) {
-                temp.add((int) (Math.random() * Params.GRAIN_CAPACITY_MAX));
+                temp.add(Params.randomInt(0, (int) Params.GRAIN_CAPACITY_MAX));
             }
             land.add(temp);
-            temp.clear();
         }
     }
+
     public void initializePeople(){
         for(int i=0; i < Params.POPULATION;i++){
             Person temp = new Person();
@@ -88,33 +77,29 @@ public class Patch{
         }
     }
 
-
-
-    public int consumeGrain(int row, int column) {
-
+    public synchronized int consumeGrain(int row, int column) {
         int grainNum = this.land.get(row).get(column);
         this.land.get(row).set(column, 0);
         return grainNum;
-
     }
 
-
-
-    public void growGrain(){
-        int grainCapacity = 0;
-        int newGrainCapacity = 0 ;
-
+    public synchronized void growGrain(){
         for(int i = 0 ;i < Params.ROW_MAX; i++){
             for(int j = 0; j < Params.COLUMN_MAX; j++){
-                grainCapacity = this.land.get(i).get(j);
+                int grainCapacity = this.land.get(i).get(j);
                 if (grainCapacity<Params.GRAIN_CAPACITY_MAX){
-                    newGrainCapacity = Params.randomInt(0,(int)(Params.GRAIN_CAPACITY_MAX - grainCapacity));
-                    this.land.get(i).set(j,newGrainCapacity);
+                    int newGrainCapacity = Params.randomInt(0,(int)(Params.GRAIN_CAPACITY_MAX - grainCapacity));
+                    this.land.get(i).set(j,newGrainCapacity + grainCapacity);
                 }
             }
-
         }
     }
 
+    public ArrayList<Person> getPeople() {
+        return people;
+    }
 
+    public ArrayList<ArrayList<Integer>> getLand() {
+        return land;
+    }
 }

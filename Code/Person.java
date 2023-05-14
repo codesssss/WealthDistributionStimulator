@@ -12,7 +12,6 @@ public class Person {
     private int age;
     private int column;
     private int row;
-    private int direction;
 
     private wealthClass myWealthClass;
     public enum wealthClass {// 0 for poor; 1 for middle class; 2 for rich
@@ -22,14 +21,13 @@ public class Person {
     }
 
     public Person(){
-        randomGeneratePersonInformation();
+        initializePerson();
         age = 0;
-        column = (int)(Math.random()*Params.COLUMN_MAX);
-        row = (int)(Math.random()*Params.ROW_MAX);
-        direction = 0;
+        column = Params.randomInt(0, Params.COLUMN_MAX);
+        row = Params.randomInt(0, Params.ROW_MAX);
     }
 
-    public void randomGeneratePersonInformation() {
+    private void initializePerson() {
         age = 0;
         lifeExpectancy = Params.randomInt(Params.LIFE_EXPECTANCY_MAX, Params.LIFE_EXPECTANCY_MIN);
         metabolism = Params.randomInt(1, Params.METABOLISM_MAX);
@@ -37,17 +35,20 @@ public class Person {
         vision = Params.randomInt(1, Params.VISION_MAX);
     }
 
-    public void updateNewPersonInfo(){
+    public void updatePersonInfo(){
         this.wealth -= metabolism;
         age++;
         if(age > lifeExpectancy || wealth < 0){
-            randomGeneratePersonInformation();
+            initializePerson();
         }
-
     }
 
-    public void collectWealth(int newWealth){
-        this.wealth += newWealth;
+    public void reproduce(){
+        initializePerson();
+
+    }
+    public void collectWealth(int wealthToAdd){
+        this.wealth += wealthToAdd;
     }
 
     public void updateClass(int mostWealth){
@@ -64,27 +65,25 @@ public class Person {
 
     }
 
-    public void setColumn(int newColumn){
-        this.column = newColumn;
-    }
-
-    public void setRow(int newRow){
+    public void setPosition(int newRow, int newColumn){
         this.row = newRow;
+        this.column = newColumn;
     }
 
     public int getColumn(){
         return column;
     }
 
+    public void setColumn(int column){
+        this.column = column;
+    }
+
     public int getRow(){
         return row;
     }
 
-    public void collectGrain(int num){
-        this.wealth += num;
-    }
-    public void reproduce(){
-
+    public void setRow(int row){
+        this.row = row;
     }
 
     public int getWealth() {
@@ -127,11 +126,4 @@ public class Person {
         this.age = age;
     }
 
-    public int getDirection() {
-        return direction;
-    }
-
-    public void setDirection(int direction) {
-        this.direction = direction;
-    }
 }
