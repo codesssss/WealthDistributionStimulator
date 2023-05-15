@@ -111,15 +111,24 @@ public class Land{
     public void diffuseGrains(int row,int column,double diffusePercent){
         int grains = (int)(getPatchesGrainHere(row,column) * (diffusePercent/100));
         setPatchesMaxGrainHere(row,column,getPatchesMaxGrainHere(row,column) -grains);
-        int diffusionGrains = (int)(grains/8);
-        setPatchesGrainHere((row+1),column,diffusionGrains);
-        setPatchesGrainHere(row,(column+1),diffusionGrains);
-        setPatchesGrainHere((row+1),(column+1),diffusionGrains);
-        setPatchesGrainHere((row-1),column,diffusionGrains);
-        setPatchesGrainHere(row,(column-1),diffusionGrains);
-        setPatchesGrainHere((row-1),(column-1),diffusionGrains);
-        setPatchesGrainHere((row-1),(column+1),diffusionGrains);
-        setPatchesGrainHere((row+1),(column-1),diffusionGrains);
+        int totalNeighbors = 8;
+        boolean rowFlag = false;
+        if(row == Params.ROW_MAX || row == 0){
+            totalNeighbors = 6;
+            rowFlag = true;
+        }
+        if (column == Params.COLUMN_MAX || column == 0){
+            totalNeighbors =6;
+            if(rowFlag){
+                totalNeighbors = 8;
+            }
+        }
+        int diffusionGrains = (int)(grains/totalNeighbors);
+        for(int i = -1; i < 2 ; i++){
+            for(int j = -1; i < 2 ; i++){
+            setPatchesGrainHere((row+i),(column+i),diffusionGrains);
+            }
+        }
     }
 
 
