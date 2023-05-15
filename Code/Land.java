@@ -62,18 +62,8 @@ public class Land{
         return  maxWealth;
     }
 
-//    public void initializeGrid() {
-//        for (int i = 0; i < Params.ROW_MAX; i++) {
-//            ArrayList<Patch> temp = new ArrayList<>();
-//            for (int j = 0; j < Params.COLUMN_MAX; j++) {
-//                temp.add(Params.randomInt(0, (int) Params.GRAIN_CAPACITY_MAX));
-//            }
-//            patches.add(temp);
-//        }
-//
-//    }
-
     public void initializeGrid(){
+
         for (int i = 0; i < Params.ROW_MAX; i++) {
             ArrayList<Patch> tempList = new ArrayList<>();
             Patch temp = new Patch();
@@ -102,6 +92,7 @@ public class Land{
                 }
             }
         }
+
         for (int x = 0; x < 10; x++) {
             for (int i = 0; i < Params.ROW_MAX; i++) {
                 for (int j = 0; j < Params.COLUMN_MAX; j++) {
@@ -109,7 +100,6 @@ public class Land{
                 }
             }
         }
-
 
         for(int i = 0 ; i < Params.ROW_MAX ; i++){
             for(int j = 0 ; j < Params.COLUMN_MAX ; j++){
@@ -130,8 +120,6 @@ public class Land{
         setPatchesGrainHere((row-1),(column-1),diffusionGrains);
         setPatchesGrainHere((row-1),(column+1),diffusionGrains);
         setPatchesGrainHere((row+1),(column-1),diffusionGrains);
-
-
     }
 
 
