@@ -16,12 +16,6 @@ public class Land{
         this.people = new ArrayList<Person>();
         initializePeople();
     }
-    public Land(ArrayList<Person> people,ArrayList<ArrayList<Patch>> patches) {
-        this.patches = patches;
-        initializeGrid();
-        this.people = people;
-        initializePeople();
-    }
 
     public void simulation(){
         int maxWealth;
@@ -39,7 +33,7 @@ public class Land{
         return index >= 0 && index < max;
     }
 
-    public synchronized void move(Person person){
+    public void move(Person person){
         int[] totalDirection = new int[4];
         int[] dx = {0, 0, -1, 1};
         int[] dy = {1, -1, 0, 0};
@@ -143,8 +137,11 @@ public class Land{
         }
         int diffusionGrains = (int)(grains/totalNeighbors);
         for(int i = -1; i < 2 ; i++){
-            for(int j = -1; i < 2 ; i++){
-            setPatchesGrainHere((row+i),(column+i),diffusionGrains);
+            for(int j = -1; j < 2 ; j++) {
+                if (i == 0 && j == 0) {
+                }else {
+                    setPatchesGrainHere((row + i), (column + j), diffusionGrains);
+                }
             }
         }
     }
