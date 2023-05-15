@@ -35,18 +35,20 @@ public class Person {
         vision = Params.randomInt(1, Params.VISION_MAX);
     }
 
-    public void updatePersonInfo(){
+    public void updatePersonInfo(int mostWealth){
         this.wealth -= metabolism;
         age++;
         if(age > lifeExpectancy || wealth < 0){
             initializePerson();
         }
+        updateClass(mostWealth);
+        System.out.println("Person:"+getWealth()+getLifeExpectancy()+getAge());
     }
 
     public void reproduce(){
         initializePerson();
-
     }
+
     public void collectWealth(int wealthToAdd){
         this.wealth += wealthToAdd;
     }

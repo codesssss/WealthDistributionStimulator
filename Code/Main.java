@@ -5,9 +5,11 @@ import java.util.ArrayList;
  * @Date 2023/5/11 18:18
  **/
 public class Main {
-    ArrayList<Person> people;
 
     public static void main(String[] args) {
-
+        Land land = new Land();
+        for(int i = 0 ; i < Params.ROUND_NUM ;i++){
+            land.simulation();
+        }
     }
 }

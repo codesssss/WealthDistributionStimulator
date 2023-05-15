@@ -35,6 +35,8 @@ public class Params {
 
     public static final double PERCENTAGE_OF_DIFFUSION = 0.25;
 
+    public static final int ROUND_NUM = 1000;
+
 
 
 

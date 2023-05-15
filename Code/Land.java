@@ -5,16 +5,34 @@ import java.util.ArrayList;
  * @Date 2023/5/11 18:18
  **/
 public class Land{
-    private ArrayList<Person> people;
-    private ArrayList<ArrayList<Patch>> patches;
+    public ArrayList<Person> people;
+    public ArrayList<ArrayList<Patch>> patches;
 
 
 
     public Land() {
-        this.patches = new ArrayList<>();
+        this.patches = new ArrayList<ArrayList<Patch>>();
         initializeGrid();
-        this.people = new ArrayList<>();
+        this.people = new ArrayList<Person>();
         initializePeople();
+    }
+    public Land(ArrayList<Person> people,ArrayList<ArrayList<Patch>> patches) {
+        this.patches = patches;
+        initializeGrid();
+        this.people = people;
+        initializePeople();
+    }
+
+    public void simulation(){
+        int maxWealth;
+        for(Person person : people){
+            move(person);
+        }
+        maxWealth = findTheBiggestWealth();
+        for (Person person : people){
+            person.updatePersonInfo(maxWealth);
+        }
+        growGrain();
     }
 
     private boolean isWithinBounds(int index, int max) {
@@ -34,7 +52,7 @@ public class Land{
                 int newRow = row + dx[direction] * i;
                 int newColumn = column + dy[direction] * i;
                 if(isWithinBounds(newRow, Params.ROW_MAX) && isWithinBounds(newColumn, Params.COLUMN_MAX)){
-                    totalDirection[direction] += patches.get(newRow).get(newColumn).getGrainHere();
+                    totalDirection[direction] += getPatchesGrainHere(newRow,newColumn);
                 }
             }
         }
@@ -65,9 +83,9 @@ public class Land{
     public void initializeGrid(){
 
         for (int i = 0; i < Params.ROW_MAX; i++) {
-            ArrayList<Patch> tempList = new ArrayList<>();
-            Patch temp = new Patch();
+            ArrayList<Patch> tempList = new ArrayList<Patch>();
             for (int j = 0; j < Params.COLUMN_MAX; j++) {
+                Patch temp = new Patch();
                 if(Math.random() < Params.PERCENTAGE_OF_BEST_PATCHES) {
                     temp.setMaxGrainHere((int) Params.GRAIN_CAPACITY_MAX);
                     temp.setGrainHere((int)Params.GRAIN_CAPACITY_MAX);
@@ -78,7 +96,6 @@ public class Land{
                     tempList.add(temp);
                 }
             }
-            tempList.clear();
             patches.add(tempList);
         }
 
@@ -108,6 +125,7 @@ public class Land{
         }
 
     }
+
     public void diffuseGrains(int row,int column,double diffusePercent){
         int grains = (int)(getPatchesGrainHere(row,column) * (diffusePercent/100));
         setPatchesMaxGrainHere(row,column,getPatchesMaxGrainHere(row,column) -grains);
@@ -131,8 +149,6 @@ public class Land{
         }
     }
 
-
-
     public void initializePeople(){
         for(int i=0; i < Params.POPULATION;i++){
             Person temp = new Person();
@@ -140,19 +156,18 @@ public class Land{
         }
     }
 
-    public synchronized int consumeGrain(int row, int column) {
+    public int consumeGrain(int row, int column) {
         int grainNum = getPatchesGrainHere(row, column);
         setPatchesGrainHere(row,column,0);
         return grainNum;
     }
 
-    public synchronized void growGrain(){
+    public void growGrain(){
         for(int i = 0 ;i < Params.ROW_MAX; i++){
             for(int j = 0; j < Params.COLUMN_MAX; j++){
                 int grainCapacity = getPatchesGrainHere(i, j);
-                if (grainCapacity<Params.GRAIN_CAPACITY_MAX){
-                    int newGrainCapacity = Params.randomInt(0,(int)(Params.GRAIN_CAPACITY_MAX - grainCapacity));
-                    this.patches.get(i).get(j).setGrainHere(newGrainCapacity + grainCapacity);
+                if (grainCapacity < getPatchesMaxGrainHere(i,j) - Params.NUM_GRAIN_GROWN){
+                    setPatchesGrainHere(i,j,(grainCapacity + Params.NUM_GRAIN_GROWN));
                 }
             }
         }
@@ -169,17 +184,20 @@ public class Land{
     public int getPatchesGrainHere(int row,int column){
         return (int)patches.get(row).get(column).getGrainHere();
     }
+
     public void setPatchesGrainHere(int row, int column, int grainNum){
         if (row < Params.ROW_MAX && row >= 0 && column <Params.COLUMN_MAX && column >= 0) {
             patches.get(row).get(column).setGrainHere(grainNum);
         }
     }
+
     public int getPatchesMaxGrainHere(int row,int column){
         return (int)patches.get(row).get(column).getMaxGrainHere();
     }
+
     public void setPatchesMaxGrainHere(int row, int column, int grainNum){
         if (row < Params.ROW_MAX && row >= 0 && column <Params.COLUMN_MAX && column >= 0) {
-            patches.get(row).get(column).setMaxGrainHere(grainNum);
+            this.patches.get(row).get(column).setMaxGrainHere(grainNum);
         }
     }
 }
