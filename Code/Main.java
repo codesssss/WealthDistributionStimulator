@@ -10,6 +10,7 @@ public class Main {
         Land land = new Land();
         for(int i = 0 ; i < Params.ROUND_NUM ;i++){
             land.simulation();
+            System.out.println("Round "+ i);
         }
     }
 }

@@ -117,7 +117,7 @@ public class Land{
                 setPatchesMaxGrainHere(i,j,getPatchesGrainHere(i,j));
             }
         }
-
+        System.out.println("Finish initializeGrid");
     }
 
     public void diffuseGrains(int row,int column,double diffusePercent){
@@ -151,6 +151,7 @@ public class Land{
             Person temp = new Person();
             people.add(temp);
         }
+        System.out.println("Finish initializePeople");
     }
 
     public int consumeGrain(int row, int column) {

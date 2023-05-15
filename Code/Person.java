@@ -42,7 +42,7 @@ public class Person {
             initializePerson();
         }
         updateClass(mostWealth);
-        System.out.println("Person:"+getWealth()+getLifeExpectancy()+getAge());
+//        System.out.println("Person:"+getWealth()+getLifeExpectancy()+getAge());
     }
 
     public void reproduce(){
