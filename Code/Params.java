@@ -29,6 +29,15 @@ public class Params {
 
     public static final int RIGHT = 270;
 
+    public static final double PERCENTAGE_OF_BEST_PATCHES = 0.1;
+
+    public static final int NUM_GRAIN_GROWN = 4;
+
+    public static final double PERCENTAGE_OF_DIFFUSION = 0.25;
+
+
+
+
     public static int randomInt( int min, int max) {
         // Generates a random int between min and max including both
         int range = max-min;
