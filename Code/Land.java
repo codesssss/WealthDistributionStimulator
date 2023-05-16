@@ -1,3 +1,6 @@
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -7,10 +10,17 @@ import java.util.ArrayList;
 public class Land{
     public ArrayList<Person> people;
     public ArrayList<ArrayList<Patch>> patches;
+    private int poorNum;
+    private int middleNum;
+    private int richNum;
 
 
 
     public Land() {
+        this.poorNum = 0;
+        this.middleNum = 0;
+        this.richNum = 0;
+        ArrayList<ArrayList<Integer>> result = new ArrayList<>();
         this.patches = new ArrayList<ArrayList<Patch>>();
         initializeGrid();
         this.people = new ArrayList<Person>();
@@ -18,15 +28,20 @@ public class Land{
     }
 
     public void simulation(){
-        int maxWealth;
-        for(Person person : people){
-            move(person);
+        openCSV();
+        for(int i = 0 ; i < Params.ROUND_NUM ;i++) {
+            double maxWealth;
+            for (Person person : people) {
+                move(person);
+            }
+            maxWealth = findTheBiggestWealth();
+            for (Person person : people) {
+                person.updatePersonInfo(maxWealth);
+            }
+            growGrain();
+            countDifferentWealthClass();
+            addLineInCSV();
         }
-        maxWealth = findTheBiggestWealth();
-        for (Person person : people){
-            person.updatePersonInfo(maxWealth);
-        }
-        growGrain();
     }
 
     private boolean isWithinBounds(int index, int max) {
@@ -66,11 +81,12 @@ public class Land{
         }
     }
 
-    public int findTheBiggestWealth(){
-        int maxWealth = 0;
+    public double findTheBiggestWealth(){
+        double maxWealth = 0;
         for(int i =0 ; i < Params.POPULATION ; i++){
           maxWealth = Math.max(maxWealth, people.get(i).getWealth());
         }
+        //System.out.println(maxWealth);
         return  maxWealth;
     }
 
@@ -121,7 +137,7 @@ public class Land{
     }
 
     public void diffuseGrains(int row,int column,double diffusePercent){
-        int grains = (int)(getPatchesGrainHere(row,column) * (diffusePercent/100));
+        double grains = (getPatchesGrainHere(row,column) * (diffusePercent));
         setPatchesMaxGrainHere(row,column,getPatchesMaxGrainHere(row,column) -grains);
         int totalNeighbors = 8;
         boolean rowFlag = false;
@@ -154,8 +170,8 @@ public class Land{
         System.out.println("Finish initializePeople");
     }
 
-    public int consumeGrain(int row, int column) {
-        int grainNum = getPatchesGrainHere(row, column);
+    public double consumeGrain(int row, int column) {
+        double grainNum = getPatchesGrainHere(row, column);
         setPatchesGrainHere(row,column,0);
         return grainNum;
     }
@@ -163,7 +179,7 @@ public class Land{
     public void growGrain(){
         for(int i = 0 ;i < Params.ROW_MAX; i++){
             for(int j = 0; j < Params.COLUMN_MAX; j++){
-                int grainCapacity = getPatchesGrainHere(i, j);
+                double grainCapacity = getPatchesGrainHere(i, j);
                 if (grainCapacity < getPatchesMaxGrainHere(i,j) - Params.NUM_GRAIN_GROWN){
                     setPatchesGrainHere(i,j,(grainCapacity + Params.NUM_GRAIN_GROWN));
                 }
@@ -179,23 +195,59 @@ public class Land{
         return patches;
     }
     
-    public int getPatchesGrainHere(int row,int column){
-        return (int)patches.get(row).get(column).getGrainHere();
+    public double getPatchesGrainHere(int row,int column){
+        return patches.get(row).get(column).getGrainHere();
     }
 
-    public void setPatchesGrainHere(int row, int column, int grainNum){
+    public void setPatchesGrainHere(int row, int column, double grainNum){
         if (row < Params.ROW_MAX && row >= 0 && column <Params.COLUMN_MAX && column >= 0) {
             patches.get(row).get(column).setGrainHere(grainNum);
         }
     }
 
-    public int getPatchesMaxGrainHere(int row,int column){
-        return (int)patches.get(row).get(column).getMaxGrainHere();
+    public double getPatchesMaxGrainHere(int row,int column){
+        return patches.get(row).get(column).getMaxGrainHere();
     }
 
-    public void setPatchesMaxGrainHere(int row, int column, int grainNum){
+    public void setPatchesMaxGrainHere(int row, int column, double grainNum){
         if (row < Params.ROW_MAX && row >= 0 && column <Params.COLUMN_MAX && column >= 0) {
             this.patches.get(row).get(column).setMaxGrainHere(grainNum);
         }
+    }
+
+    public void countDifferentWealthClass(){
+        richNum = 0;
+        poorNum = 0;
+        middleNum = 0;
+        for(Person person : people){
+            switch (person.getWealthClass()){
+                case RICH -> this.richNum++;
+                case MIDDLE -> this.middleNum++;
+                case POOR -> this.poorNum++;
+            }
+        }
+    }
+
+    public void openCSV(){
+        String csvFilePath = "out.csv";
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(csvFilePath,false))) {
+            String dataRow = "Poor,Middle,Rich";
+            writer.write(dataRow);
+            writer.newLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+    public void addLineInCSV(){
+        String csvFilePath = "out.csv";
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(csvFilePath,true))) {
+            String dataRow = ""+this.poorNum+","+this.middleNum+","+this.richNum;
+            writer.write(dataRow);
+            writer.newLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 }

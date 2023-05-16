@@ -5,7 +5,7 @@ import java.util.ArrayList;
  * @Date 2023/5/11 18:18
  **/
 public class Person {
-    private int wealth;
+    private double wealth;
     private int metabolism;
     private int lifeExpectancy;
     private int vision;
@@ -31,11 +31,11 @@ public class Person {
         age = 0;
         lifeExpectancy = Params.randomInt(Params.LIFE_EXPECTANCY_MAX, Params.LIFE_EXPECTANCY_MIN);
         metabolism = Params.randomInt(1, Params.METABOLISM_MAX);
-        wealth = Params.randomInt(metabolism, 50);
+        wealth = Params.randomInt(metabolism, 25);
         vision = Params.randomInt(1, Params.VISION_MAX);
     }
 
-    public void updatePersonInfo(int mostWealth){
+    public void updatePersonInfo(double mostWealth){
         this.wealth -= metabolism;
         age++;
         if(age > lifeExpectancy || wealth < 0){
@@ -49,16 +49,16 @@ public class Person {
         initializePerson();
     }
 
-    public void collectWealth(int wealthToAdd){
+    public void collectWealth(double wealthToAdd){
         this.wealth += wealthToAdd;
     }
 
-    public void updateClass(int mostWealth){
-        if(this.wealth < (int)( mostWealth / 3 ) ){
+    public void updateClass(double mostWealth){
+        if(this.wealth <= ( mostWealth / 3 ) ){
 
             this.myWealthClass = wealthClass.POOR;
         }
-        else if ( this.wealth >= (int)(mostWealth / 3 ) && this.wealth < (int)(mostWealth / 3 * 2 )){
+        else if ( this.wealth > (mostWealth / 3 ) && this.wealth <= (mostWealth / 3 * 2 )){
             this.myWealthClass = wealthClass.MIDDLE;
         }
         else {
@@ -88,7 +88,7 @@ public class Person {
         this.row = row;
     }
 
-    public int getWealth() {
+    public double getWealth() {
         return wealth;
     }
 
@@ -127,5 +127,10 @@ public class Person {
     public void setAge(int age) {
         this.age = age;
     }
+
+    public wealthClass  getWealthClass(){
+        return myWealthClass;
+    }
+
 
 }

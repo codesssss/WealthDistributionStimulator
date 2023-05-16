@@ -3,8 +3,8 @@
  * @Date 2023/5/15 18:07
  **/
 public class Patch {
-    private int maxGrainHere;
-    private int grainHere;
+    private double maxGrainHere;
+    private double grainHere;
 
     public Patch(){
         this.maxGrainHere = 0;
@@ -12,19 +12,19 @@ public class Patch {
     }
 
 
-    public int getMaxGrainHere() {
+    public double getMaxGrainHere() {
         return maxGrainHere;
     }
 
-    public void setMaxGrainHere(int maxGrainHere) {
+    public void setMaxGrainHere(double maxGrainHere) {
         this.maxGrainHere = maxGrainHere;
     }
 
-    public int getGrainHere() {
+    public double getGrainHere() {
         return grainHere;
     }
 
-    public void setGrainHere(int grainHere) {
+    public void setGrainHere(double grainHere) {
         this.grainHere = grainHere;
     }
 }
