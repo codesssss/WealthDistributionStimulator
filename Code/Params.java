@@ -3,7 +3,7 @@
  * @Date 2023/5/11 18:18
  **/
 public class Params {
-    public static final int LIFE_EXPECTANCY_MAX = 100;
+    public static final int LIFE_EXPECTANCY_MAX = 83;
 
     public static final int LIFE_EXPECTANCY_MIN = 1;
 

@@ -29,7 +29,8 @@ public class Person {
 
     private void initializePerson() {
         age = 0;
-        lifeExpectancy = Params.randomInt(Params.LIFE_EXPECTANCY_MAX, Params.LIFE_EXPECTANCY_MIN);
+        lifeExpectancy = Params.randomInt(Params.LIFE_EXPECTANCY_MIN, Params.LIFE_EXPECTANCY_MAX);
+        //System.out.println(lifeExpectancy);
         metabolism = Params.randomInt(1, Params.METABOLISM_MAX);
         wealth = Params.randomInt(metabolism, 25);
         vision = Params.randomInt(1, Params.VISION_MAX);

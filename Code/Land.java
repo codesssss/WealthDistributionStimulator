@@ -86,7 +86,7 @@ public class Land{
         for(int i =0 ; i < Params.POPULATION ; i++){
           maxWealth = Math.max(maxWealth, people.get(i).getWealth());
         }
-        //System.out.println(maxWealth);
+        System.out.println(maxWealth);
         return  maxWealth;
     }
 
@@ -96,9 +96,9 @@ public class Land{
             ArrayList<Patch> tempList = new ArrayList<Patch>();
             for (int j = 0; j < Params.COLUMN_MAX; j++) {
                 Patch temp = new Patch();
-                if(Math.random() < Params.PERCENTAGE_OF_BEST_PATCHES) {
-                    temp.setMaxGrainHere((int) Params.GRAIN_CAPACITY_MAX);
-                    temp.setGrainHere((int)Params.GRAIN_CAPACITY_MAX);
+                if(Math.random() <= Params.PERCENTAGE_OF_BEST_PATCHES) {
+                    temp.setMaxGrainHere(Params.GRAIN_CAPACITY_MAX);
+                    temp.setGrainHere(Params.GRAIN_CAPACITY_MAX);
                     tempList.add(temp);
                 }else {
                     temp.setMaxGrainHere(0);
