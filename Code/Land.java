@@ -86,7 +86,7 @@ public class Land{
         for(int i =0 ; i < Params.POPULATION ; i++){
           maxWealth = Math.max(maxWealth, people.get(i).getWealth());
         }
-        System.out.println(maxWealth);
+        //System.out.println(maxWealth);
         return  maxWealth;
     }
 
@@ -112,7 +112,7 @@ public class Land{
         for (int x = 0; x < 5; x++) {
             for (int i = 0; i < Params.ROW_MAX; i++) {
                 for (int j = 0; j < Params.COLUMN_MAX; j++) {
-                    if (getPatchesGrainHere(i,j) != 0) {
+                    if (getPatchesMaxGrainHere(i,j) != 0) {
                         setPatchesGrainHere(i,j,getPatchesMaxGrainHere(i,j));
                         diffuseGrains(i, j, Params.PERCENTAGE_OF_DIFFUSION);
                     }
@@ -138,6 +138,7 @@ public class Land{
 
     public void diffuseGrains(int row,int column,double diffusePercent){
         double grains = (getPatchesGrainHere(row,column) * (diffusePercent));
+        //System.out.println(grains);
         setPatchesMaxGrainHere(row,column,getPatchesMaxGrainHere(row,column) -grains);
         int totalNeighbors = 8;
         boolean rowFlag = false;
@@ -151,7 +152,8 @@ public class Land{
                 totalNeighbors = 8;
             }
         }
-        int diffusionGrains = (int)(grains/totalNeighbors);
+        double diffusionGrains = (grains/totalNeighbors);
+        //System.out.println(diffusionGrains);
         for(int i = -1; i < 2 ; i++){
             for(int j = -1; j < 2 ; j++) {
                 if (i == 0 && j == 0) {
@@ -182,6 +184,8 @@ public class Land{
                 double grainCapacity = getPatchesGrainHere(i, j);
                 if (grainCapacity < getPatchesMaxGrainHere(i,j) - Params.NUM_GRAIN_GROWN){
                     setPatchesGrainHere(i,j,(grainCapacity + Params.NUM_GRAIN_GROWN));
+                }else {
+                    setPatchesGrainHere(i,j,Math.abs(grainCapacity - Params.NUM_GRAIN_GROWN));
                 }
             }
         }

@@ -52,6 +52,7 @@ public class Person {
 
     public void collectWealth(double wealthToAdd){
         this.wealth += wealthToAdd;
+       // System.out.println(wealth);
     }
 
     public void updateClass(double mostWealth){

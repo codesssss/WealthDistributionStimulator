@@ -11,15 +11,13 @@ public class Params {
 
     public static final int  METABOLISM_MAX = 15;
 
-    public static final double NEW_GRAIN_MAX = 20;
-
     public static final double GRAIN_CAPACITY_MAX = 100;
 
     public static final int POPULATION = 250;
 
-    public static final int COLUMN_MAX = 100;
+    public static final int COLUMN_MAX = 50;
 
-    public static final int ROW_MAX = 100;
+    public static final int ROW_MAX = 50;
 
     public static final int UP = 0;
 
