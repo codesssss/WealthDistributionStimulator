@@ -31,6 +31,8 @@ public class Params {
 
     public static final double INHERITANCE_PROPORTIONS = 0.5;
 
+    public static final boolean DIFFUSE_INIT_MODEL = true;
+
 
 
 
