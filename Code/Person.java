@@ -32,22 +32,27 @@ public class Person {
         lifeExpectancy = Params.randomInt(Params.LIFE_EXPECTANCY_MIN, Params.LIFE_EXPECTANCY_MAX);
         //System.out.println(lifeExpectancy);
         metabolism = Params.randomInt(1, Params.METABOLISM_MAX);
-        wealth = Params.randomInt(metabolism, 25);
+        wealth = Params.randomInt(metabolism, Params.PERSON_INIT_WEALTH_MAX);
         vision = Params.randomInt(1, Params.VISION_MAX);
     }
 
     public void updatePersonInfo(double mostWealth){
         this.wealth -= metabolism;
         age++;
-        if(age > lifeExpectancy || wealth < 0){
+        if(wealth < 0){
             initializePerson();
+        }else if (wealth > 0 && age > lifeExpectancy){
+            reproduce();
         }
         updateClass(mostWealth);
 //        System.out.println("Person:"+getWealth()+getLifeExpectancy()+getAge());
     }
 
     public void reproduce(){
+        double fatherWealth = this.wealth * Params.INHERITANCE_PROPORTIONS;
         initializePerson();
+        wealth += fatherWealth;
+
     }
 
     public void collectWealth(double wealthToAdd){

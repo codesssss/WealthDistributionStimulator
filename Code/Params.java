@@ -19,13 +19,7 @@ public class Params {
 
     public static final int ROW_MAX = 50;
 
-    public static final int UP = 0;
-
-    public static final int LEFT = 90;
-
-    public static final int DOWN = 180;
-
-    public static final int RIGHT = 270;
+    public static final int PERSON_INIT_WEALTH_MAX = 25;
 
     public static final double PERCENTAGE_OF_BEST_PATCHES = 0.1;
 
@@ -34,6 +28,8 @@ public class Params {
     public static final double PERCENTAGE_OF_DIFFUSION = 0.25;
 
     public static final int ROUND_NUM = 1000;
+
+    public static final double INHERITANCE_PROPORTIONS = 0.5;
 
 
 
