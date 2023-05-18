@@ -3,6 +3,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import static java.util.Collections.sort;
+
 /**
  * @Author Fangzhou Wang Haoyu Liu Xuhang Shi
  * @Date 2023/5/11 18:18
@@ -55,6 +57,7 @@ public class Land {
             countDifferentWealthClass();
             addLineInCSV();
         }
+        wealthSummary();
         System.out.println("Simulation End.");
     }
 
@@ -286,25 +289,48 @@ public class Land {
     }
 
     /**
+     * Summary and document all wealth data in CSV file
+     */
+    public void wealthSummary(){
+        ArrayList<Double> allWealth = new ArrayList<>();
+        for(Person person:people){
+            double wealth =0 ;
+            wealth = person.getWealth();
+            allWealth.add(wealth);
+        }
+        sort(allWealth);
+        for(double i:allWealth){
+            addWealthNumInCSV(i);
+        }
+    }
+
+    /**
      * Open CSV file and add the headline.
      */
     public void openCSV() {
-        String csvFilePath = "out.csv";
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(csvFilePath, false))) {
+        String csvFilePath1 = "WealthClassNum.csv";
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(csvFilePath1, false))) {
             String dataRow = "Poor,Middle,Rich";
             writer.write(dataRow);
             writer.newLine();
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+        String csvFilePath2 = "WealthNum.csv";
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(csvFilePath2, false))) {
+            String dataRow = "Wealth,Population";
+            writer.write(dataRow);
+            writer.newLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
-     * Adds a line to the CSV file with the current round information.
+     * Adds a line to the WealthClassNum.CSV file with the wealth class information.
      */
     public void addLineInCSV() {
-        String csvFilePath = "out.csv";
+        String csvFilePath = "WealthClassNum.csv";
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(csvFilePath, true))) {
             String dataRow = "" + this.poorNum + "," + this.middleNum + "," + this.richNum;
             writer.write(dataRow);
@@ -314,6 +340,21 @@ public class Land {
         }
 
     }
+
+    /**
+     * Adds a line to the WealthNumCSV file with the wealth information.
+     */
+    public void addWealthNumInCSV(double wealth){
+        String csvFilePath2 = "WealthNum.csv";
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(csvFilePath2, true))) {
+            String dataRow = ""+wealth+","+Params.POPULATION;
+            writer.write(dataRow);
+            writer.newLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     /**
      * Get patch grain number by row and column
