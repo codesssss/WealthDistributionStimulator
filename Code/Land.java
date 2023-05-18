@@ -56,6 +56,7 @@ public class Land {
             }
             countDifferentWealthClass();
             addLineInCSV();
+            addGiniCoefficientInCSV(calculateGiniCoefficient());
         }
         wealthSummary();
         System.out.println("Simulation End.");
@@ -324,6 +325,14 @@ public class Land {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        String csvFilePath = "gini.csv";
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(csvFilePath, false))) {
+            String dataRow = "Gini";
+            writer.write(dataRow);
+            writer.newLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -354,6 +363,61 @@ public class Land {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Open Gini CSV file and add the headline.
+     */
+    public void openGiniCSV() {
+        String csvFilePath = "gini.csv";
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(csvFilePath, false))) {
+            String dataRow = "Gini_Coefficient";
+            writer.write(dataRow);
+            writer.newLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Adds a line to the gini.csv file with the Gini coefficient information.
+     * @param giniCoefficient The Gini coefficient to add.
+     */
+    public void addGiniCoefficientInCSV(double giniCoefficient) {
+        String csvFilePath = "gini.csv";
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(csvFilePath, true))) {
+            String dataRow = "" + giniCoefficient;
+            writer.write(dataRow);
+            writer.newLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Calculates the Gini coefficient for the current population.
+     *
+     * @return the Gini coefficient
+     */
+    public double calculateGiniCoefficient() {
+        ArrayList<Double> wealth = new ArrayList<>();
+        for (Person person : people) {
+            wealth.add(person.getWealth());
+        }
+
+        sort(wealth);
+        int length = wealth.size();
+        double cumulativeWealth = 0;
+        double cumulativeBase = 0;
+        for (int i = 1; i <= length; i++) {
+            cumulativeWealth += wealth.get(i - 1);
+            cumulativeBase += i;
+        }
+
+        double B = cumulativeWealth / cumulativeBase;
+        double GiniCoefficient = 1 + 1.0 / length - 2 * B;
+        return GiniCoefficient;
+    }
+
 
 
     /**
