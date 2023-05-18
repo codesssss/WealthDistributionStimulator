@@ -1,7 +1,11 @@
 /**
- * @Author Fangzhou Wang
+ * @Author Fangzhou Wang Haoyu Liu Xuhang Shi
  * @Date 2023/5/11 18:18
  **/
+
+/**
+ * Model Adjustable Parameters
+ */
 public class Params {
 
     /**

@@ -1,7 +1,11 @@
 /**
- * @Author Fangzhou Wang
+ * @Author Fangzhou Wang Haoyu Liu Xuhang Shi
  * @Date 2023/5/15 18:07
  **/
+
+/**
+ * The definition of Patch
+ */
 public class Patch {
     /**
      * The maximum amount of grain that can be grown on this patch

@@ -1,9 +1,13 @@
 import java.util.ArrayList;
 
 /**
- * @Author Fangzhou Wang
+ * @Author Fangzhou Wang Haoyu Liu Xuhang Shi
  * @Date 2023/5/11 18:18
  **/
+
+/**
+ * The definition of Person and random create a person information
+ */
 public class Person {
     private double wealth;
     private int metabolism;

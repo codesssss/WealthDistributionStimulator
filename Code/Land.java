@@ -4,9 +4,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 /**
- * @Author Fangzhou Wang
+ * @Author Fangzhou Wang Haoyu Liu Xuhang Shi
  * @Date 2023/5/11 18:18
  **/
+
+/**
+ * Maintain People and Patches
+ * Used for process simulation
+ */
 public class Land {
     public ArrayList<Person> people;
     public ArrayList<ArrayList<Patch>> patches;
@@ -50,6 +55,7 @@ public class Land {
             countDifferentWealthClass();
             addLineInCSV();
         }
+        System.out.println("Simulation End.");
     }
 
     /**
@@ -192,7 +198,12 @@ public class Land {
         System.out.println("Finish initializeGrid");
     }
 
-
+    /**
+     * Distribute grains to surrounding blocks according to diffuse percent
+     * @param row
+     * @param column
+     * @param diffusePercent
+     */
     public void diffuseGrains(int row, int column, double diffusePercent) {
         double grains = (getPatchesGrainHere(row, column) * (diffusePercent));
         setPatchesMaxGrainHere(row, column, getPatchesMaxGrainHere(row, column) - grains);
@@ -258,26 +269,6 @@ public class Land {
         }
     }
 
-    public double getPatchesGrainHere(int row, int column) {
-        return patches.get(row).get(column).getGrainHere();
-    }
-
-    public void setPatchesGrainHere(int row, int column, double grainNum) {
-        if (row < Params.ROW_MAX && row >= 0 && column < Params.COLUMN_MAX && column >= 0) {
-            patches.get(row).get(column).setGrainHere(grainNum);
-        }
-    }
-
-    public double getPatchesMaxGrainHere(int row, int column) {
-        return patches.get(row).get(column).getMaxGrainHere();
-    }
-
-    public void setPatchesMaxGrainHere(int row, int column, double grainNum) {
-        if (row < Params.ROW_MAX && row >= 0 && column < Params.COLUMN_MAX && column >= 0) {
-            this.patches.get(row).get(column).setMaxGrainHere(grainNum);
-        }
-    }
-
     /**
      * Count different wealth class number
      */
@@ -323,4 +314,49 @@ public class Land {
         }
 
     }
+
+    /**
+     * Get patch grain number by row and column
+     * @param row
+     * @param column
+     * @return grain number
+     */
+    public double getPatchesGrainHere(int row, int column) {
+        return patches.get(row).get(column).getGrainHere();
+    }
+
+    /**
+     * Set patch grain number by row and column
+     * @param row
+     * @param column
+     * @param grainNum
+     */
+    public void setPatchesGrainHere(int row, int column, double grainNum) {
+        if (row < Params.ROW_MAX && row >= 0 && column < Params.COLUMN_MAX && column >= 0) {
+            patches.get(row).get(column).setGrainHere(grainNum);
+        }
+    }
+
+    /**
+     * Get patch max grain number by row and column
+     * @param row
+     * @param column
+     * @return max grain number
+     */
+    public double getPatchesMaxGrainHere(int row, int column) {
+        return patches.get(row).get(column).getMaxGrainHere();
+    }
+
+    /**
+     * Set patch max grain number by row and column
+     * @param row
+     * @param column
+     * @param grainNum
+     */
+    public void setPatchesMaxGrainHere(int row, int column, double grainNum) {
+        if (row < Params.ROW_MAX && row >= 0 && column < Params.COLUMN_MAX && column >= 0) {
+            this.patches.get(row).get(column).setMaxGrainHere(grainNum);
+        }
+    }
+
 }
