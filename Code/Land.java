@@ -104,14 +104,13 @@ public class Land {
     /**
      * Finds the biggest wealth among all people in the simulation
      *
-     *   @return the biggest wealth
+     * @return the biggest wealth
      */
     public double findTheBiggestWealth() {
         double maxWealth = 0;
         for (int i = 0; i < Params.POPULATION; i++) {
             maxWealth = Math.max(maxWealth, people.get(i).getWealth());
         }
-        //System.out.println(maxWealth);
         return maxWealth;
     }
 
