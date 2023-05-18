@@ -13,19 +13,24 @@ public class Land {
     private int poorNum;
     private int middleNum;
     private int richNum;
+    private int growRound;
 
 
     public Land() {
         this.poorNum = 0;
         this.middleNum = 0;
         this.richNum = 0;
+        this.growRound = Params.GRAIN_GROWTH_INTERVAL-1;
         ArrayList<ArrayList<Integer>> result = new ArrayList<>();
         this.patches = new ArrayList<ArrayList<Patch>>();
-        initializeGrid();
+        initializePatches();
         this.people = new ArrayList<Person>();
         initializePeople();
     }
 
+    /**
+     * Runs the simulation.
+     */
     public void simulation() {
         openCSV();
         for (int i = 0; i < Params.ROUND_NUM; i++) {
@@ -37,16 +42,32 @@ public class Land {
             for (Person person : people) {
                 person.updatePersonInfo(maxWealth);
             }
-            growGrain();
+            if(growRound == 0) {
+                growGrain();
+            }else{
+                growRound--;
+            }
             countDifferentWealthClass();
             addLineInCSV();
         }
     }
 
+    /**
+     * Checks if the given index is within the valid bounds.
+     *
+     * @param index the index to check
+     * @param max   the maximum value
+     * @return true if the index is within bounds, false otherwise
+     */
     private boolean isWithinBounds(int index, int max) {
         return index >= 0 && index < max;
     }
 
+    /**
+     * Moves a person in a random direction based on the grain distribution around them.
+     *
+     * @param person the person to move
+     */
     public void move(Person person) {
         int[] totalDirection = new int[4];
         int[] dx = {0, 0, -1, 1};
@@ -80,6 +101,11 @@ public class Land {
         }
     }
 
+    /**
+     * Finds the biggest wealth among all people in the simulation
+     *
+     *   @return the biggest wealth
+     */
     public double findTheBiggestWealth() {
         double maxWealth = 0;
         for (int i = 0; i < Params.POPULATION; i++) {
@@ -89,6 +115,9 @@ public class Land {
         return maxWealth;
     }
 
+    /**
+     * Initializes the grid of patches with grain using diffusion method.
+     */
     public void diffuseInitModel() {
 
         for (int i = 0; i < Params.ROW_MAX; i++) {
@@ -134,6 +163,9 @@ public class Land {
         }
     }
 
+    /**
+     * Initializes the grid of patches with random grain values.
+     */
     public void randomInitModel() {
         for (int i = 0; i < Params.ROW_MAX; i++) {
             ArrayList<Patch> tempList = new ArrayList<Patch>();
@@ -149,7 +181,10 @@ public class Land {
 
     }
 
-    public void initializeGrid() {
+    /**
+     * Initializes the patches based on the chosen initialization model.
+     */
+    public void initializePatches() {
         if(Params.DIFFUSE_INIT_MODEL) {
             diffuseInitModel();
         }else {
@@ -161,7 +196,6 @@ public class Land {
 
     public void diffuseGrains(int row, int column, double diffusePercent) {
         double grains = (getPatchesGrainHere(row, column) * (diffusePercent));
-        //System.out.println(grains);
         setPatchesMaxGrainHere(row, column, getPatchesMaxGrainHere(row, column) - grains);
         int totalNeighbors = 8;
         boolean rowFlag = false;
@@ -176,7 +210,6 @@ public class Land {
             }
         }
         double diffusionGrains = (grains / totalNeighbors);
-        //System.out.println(diffusionGrains);
         for (int i = -1; i < 2; i++) {
             for (int j = -1; j < 2; j++) {
                 if (i == 0 && j == 0) {
@@ -187,6 +220,9 @@ public class Land {
         }
     }
 
+    /**
+     * Initializes the list of people in the simulation.
+     */
     public void initializePeople() {
         for (int i = 0; i < Params.POPULATION; i++) {
             Person temp = new Person();
@@ -195,12 +231,21 @@ public class Land {
         System.out.println("Finish initializePeople");
     }
 
+    /**
+     * Get all grains on the patch
+     * @param row
+     * @param column
+     * @return THe number that patch used to have
+     */
     public double consumeGrain(int row, int column) {
         double grainNum = getPatchesGrainHere(row, column);
         setPatchesGrainHere(row, column, 0);
         return grainNum;
     }
 
+    /**
+     * Grow grains in the simulation
+     */
     public void growGrain() {
         for (int i = 0; i < Params.ROW_MAX; i++) {
             for (int j = 0; j < Params.COLUMN_MAX; j++) {
@@ -212,14 +257,6 @@ public class Land {
                 }
             }
         }
-    }
-
-    public ArrayList<Person> getPeople() {
-        return people;
-    }
-
-    public ArrayList<ArrayList<Patch>> getPatches() {
-        return patches;
     }
 
     public double getPatchesGrainHere(int row, int column) {
@@ -242,6 +279,9 @@ public class Land {
         }
     }
 
+    /**
+     * Count different wealth class number
+     */
     public void countDifferentWealthClass() {
         richNum = 0;
         poorNum = 0;
@@ -255,6 +295,9 @@ public class Land {
         }
     }
 
+    /**
+     * Open CSV file and add the headline.
+     */
     public void openCSV() {
         String csvFilePath = "out.csv";
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(csvFilePath, false))) {
@@ -267,6 +310,9 @@ public class Land {
 
     }
 
+    /**
+     * Adds a line to the CSV file with the current round information.
+     */
     public void addLineInCSV() {
         String csvFilePath = "out.csv";
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(csvFilePath, true))) {

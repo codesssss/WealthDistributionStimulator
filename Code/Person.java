@@ -27,6 +27,9 @@ public class Person {
         row = Params.randomInt(0, Params.ROW_MAX);
     }
 
+    /**
+     * Init Person information
+     */
     private void initializePerson() {
         age = 0;
         lifeExpectancy = Params.randomInt(Params.LIFE_EXPECTANCY_MIN, Params.LIFE_EXPECTANCY_MAX);
@@ -36,6 +39,11 @@ public class Person {
         vision = Params.randomInt(1, Params.VISION_MAX);
     }
 
+    /**
+     * Updates the person's information for each round of the simulation.
+     *
+     * @param mostWealth the highest wealth among all people in the simulation
+     */
     public void updatePersonInfo(double mostWealth){
         this.wealth -= metabolism;
         age++;
@@ -48,6 +56,9 @@ public class Person {
 //        System.out.println("Person:"+getWealth()+getLifeExpectancy()+getAge());
     }
 
+    /**
+     * Reproduces a new person by inheriting wealth from the parent.
+     */
     public void reproduce(){
         double fatherWealth = this.wealth * Params.INHERITANCE_PROPORTIONS;
         initializePerson();
@@ -55,10 +66,21 @@ public class Person {
 
     }
 
+    /**
+     * Collects wealth from a patch and adds it to the person's wealth.
+     *
+     * @param wealthToAdd the wealth to add
+     */
     public void collectWealth(double wealthToAdd){
         this.wealth += wealthToAdd;
        // System.out.println(wealth);
     }
+
+    /**
+     * Updates the wealth class of the person based on the highest wealth in the simulation.
+     *
+     * @param mostWealth the highest wealth among all people in the simulation
+     */
 
     public void updateClass(double mostWealth){
         if(this.wealth <= ( mostWealth / 3 ) ){
@@ -73,6 +95,8 @@ public class Person {
         }
 
     }
+
+    // Getters and setters for all private fields...
 
     public void setPosition(int newRow, int newColumn){
         this.row = newRow;
