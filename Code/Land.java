@@ -3,10 +3,17 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import static java.util.Collections.sort;
+
 /**
- * @Author Fangzhou Wang
+ * @Author Fangzhou Wang Haoyu Liu Xuhang Shi
  * @Date 2023/5/11 18:18
  **/
+
+/**
+ * Maintain People and Patches
+ * Used for process simulation
+ */
 public class Land {
     public ArrayList<Person> people;
     public ArrayList<ArrayList<Patch>> patches;
@@ -49,7 +56,10 @@ public class Land {
             }
             countDifferentWealthClass();
             addLineInCSV();
+            addGiniCoefficientInCSV(calculateGiniCoefficient());
         }
+        wealthSummary();
+        System.out.println("Simulation End.");
     }
 
     /**
@@ -192,7 +202,12 @@ public class Land {
         System.out.println("Finish initializeGrid");
     }
 
-
+    /**
+     * Distribute grains to surrounding blocks according to diffuse percent
+     * @param row
+     * @param column
+     * @param diffusePercent
+     */
     public void diffuseGrains(int row, int column, double diffusePercent) {
         double grains = (getPatchesGrainHere(row, column) * (diffusePercent));
         setPatchesMaxGrainHere(row, column, getPatchesMaxGrainHere(row, column) - grains);
@@ -258,26 +273,6 @@ public class Land {
         }
     }
 
-    public double getPatchesGrainHere(int row, int column) {
-        return patches.get(row).get(column).getGrainHere();
-    }
-
-    public void setPatchesGrainHere(int row, int column, double grainNum) {
-        if (row < Params.ROW_MAX && row >= 0 && column < Params.COLUMN_MAX && column >= 0) {
-            patches.get(row).get(column).setGrainHere(grainNum);
-        }
-    }
-
-    public double getPatchesMaxGrainHere(int row, int column) {
-        return patches.get(row).get(column).getMaxGrainHere();
-    }
-
-    public void setPatchesMaxGrainHere(int row, int column, double grainNum) {
-        if (row < Params.ROW_MAX && row >= 0 && column < Params.COLUMN_MAX && column >= 0) {
-            this.patches.get(row).get(column).setMaxGrainHere(grainNum);
-        }
-    }
-
     /**
      * Count different wealth class number
      */
@@ -295,25 +290,56 @@ public class Land {
     }
 
     /**
+     * Summary and document all wealth data in CSV file
+     */
+    public void wealthSummary(){
+        ArrayList<Double> allWealth = new ArrayList<>();
+        for(Person person:people){
+            double wealth =0 ;
+            wealth = person.getWealth();
+            allWealth.add(wealth);
+        }
+        sort(allWealth);
+        for(double i:allWealth){
+            addWealthNumInCSV(i);
+        }
+    }
+
+    /**
      * Open CSV file and add the headline.
      */
     public void openCSV() {
-        String csvFilePath = "out.csv";
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(csvFilePath, false))) {
+        String csvFilePath1 = "WealthClassNum.csv";
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(csvFilePath1, false))) {
             String dataRow = "Poor,Middle,Rich";
             writer.write(dataRow);
             writer.newLine();
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+        String csvFilePath2 = "WealthNum.csv";
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(csvFilePath2, false))) {
+            String dataRow = "Wealth,Population";
+            writer.write(dataRow);
+            writer.newLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String csvFilePath = "gini.csv";
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(csvFilePath, false))) {
+            String dataRow = "Gini";
+            writer.write(dataRow);
+            writer.newLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
-     * Adds a line to the CSV file with the current round information.
+     * Adds a line to the WealthClassNum.CSV file with the wealth class information.
      */
     public void addLineInCSV() {
-        String csvFilePath = "out.csv";
+        String csvFilePath = "WealthClassNum.csv";
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(csvFilePath, true))) {
             String dataRow = "" + this.poorNum + "," + this.middleNum + "," + this.richNum;
             writer.write(dataRow);
@@ -323,4 +349,119 @@ public class Land {
         }
 
     }
+
+    /**
+     * Adds a line to the WealthNumCSV file with the wealth information.
+     */
+    public void addWealthNumInCSV(double wealth){
+        String csvFilePath2 = "WealthNum.csv";
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(csvFilePath2, true))) {
+            String dataRow = ""+wealth+","+Params.POPULATION;
+            writer.write(dataRow);
+            writer.newLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Open Gini CSV file and add the headline.
+     */
+    public void openGiniCSV() {
+        String csvFilePath = "gini.csv";
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(csvFilePath, false))) {
+            String dataRow = "Gini_Coefficient";
+            writer.write(dataRow);
+            writer.newLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Adds a line to the gini.csv file with the Gini coefficient information.
+     * @param giniCoefficient The Gini coefficient to add.
+     */
+    public void addGiniCoefficientInCSV(double giniCoefficient) {
+        String csvFilePath = "gini.csv";
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(csvFilePath, true))) {
+            String dataRow = "" + giniCoefficient;
+            writer.write(dataRow);
+            writer.newLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Calculates the Gini coefficient for the current population.
+     *
+     * @return the Gini coefficient
+     */
+    public double calculateGiniCoefficient() {
+        ArrayList<Double> wealth = new ArrayList<>();
+        for (Person person : people) {
+            wealth.add(person.getWealth());
+        }
+
+        sort(wealth);
+        int length = wealth.size();
+        double cumulativeWealth = 0;
+        double cumulativeBase = 0;
+        for (int i = 1; i <= length; i++) {
+            cumulativeWealth += wealth.get(i - 1);
+            cumulativeBase += i;
+        }
+
+        double B = cumulativeWealth / cumulativeBase;
+        double GiniCoefficient = 1 + 1.0 / length - 2 * B;
+        return GiniCoefficient;
+    }
+
+
+
+    /**
+     * Get patch grain number by row and column
+     * @param row
+     * @param column
+     * @return grain number
+     */
+    public double getPatchesGrainHere(int row, int column) {
+        return patches.get(row).get(column).getGrainHere();
+    }
+
+    /**
+     * Set patch grain number by row and column
+     * @param row
+     * @param column
+     * @param grainNum
+     */
+    public void setPatchesGrainHere(int row, int column, double grainNum) {
+        if (row < Params.ROW_MAX && row >= 0 && column < Params.COLUMN_MAX && column >= 0) {
+            patches.get(row).get(column).setGrainHere(grainNum);
+        }
+    }
+
+    /**
+     * Get patch max grain number by row and column
+     * @param row
+     * @param column
+     * @return max grain number
+     */
+    public double getPatchesMaxGrainHere(int row, int column) {
+        return patches.get(row).get(column).getMaxGrainHere();
+    }
+
+    /**
+     * Set patch max grain number by row and column
+     * @param row
+     * @param column
+     * @param grainNum
+     */
+    public void setPatchesMaxGrainHere(int row, int column, double grainNum) {
+        if (row < Params.ROW_MAX && row >= 0 && column < Params.COLUMN_MAX && column >= 0) {
+            this.patches.get(row).get(column).setMaxGrainHere(grainNum);
+        }
+    }
+
 }
