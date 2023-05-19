@@ -383,7 +383,7 @@ public class Land {
      * @param giniCoefficient The Gini coefficient to add.
      */
     public void addGiniCoefficientInCSV(double giniCoefficient) {
-        String csvFilePath = "gini.csv";
+        String csvFilePath = "output/gini.csv";
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(csvFilePath, true))) {
             String dataRow = "" + giniCoefficient;
             writer.write(dataRow);
