@@ -55,7 +55,7 @@ public class Land {
                 growRound--;
             }
             countDifferentWealthClass();
-            addLineInCSV();
+            addWealthClassNumInCSV();
             addGiniCoefficientInCSV(calculateGiniCoefficient());
         }
         wealthSummary();
@@ -338,7 +338,7 @@ public class Land {
     /**
      * Adds a line to the WealthClassNum.CSV file with the wealth class information.
      */
-    public void addLineInCSV() {
+    public void addWealthClassNumInCSV() {
         String csvFilePath = "WealthClassNum.csv";
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(csvFilePath, true))) {
             String dataRow = "" + this.poorNum + "," + this.middleNum + "," + this.richNum;
