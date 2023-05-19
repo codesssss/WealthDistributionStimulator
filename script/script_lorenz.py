@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 # 读取CSV文件
-df = pd.read_csv('WealthNum.csv')
+df = pd.read_csv('../output/WealthNum.csv')
 
 # 对财富进行排序
 df = df.sort_values(by='Wealth')
@@ -41,3 +41,6 @@ plt.title('Lorenz Curve')
 
 # 显示图表
 plt.show()
+
+plt.savefig('lorenz_curve.png')
+

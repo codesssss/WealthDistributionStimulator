@@ -309,7 +309,7 @@ public class Land {
      * Open CSV file and add the headline.
      */
     public void openCSV() {
-        String csvFilePath1 = "WealthClassNum.csv";
+        String csvFilePath1 = "output/WealthClassNum.csv";
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(csvFilePath1, false))) {
             String dataRow = "Poor,Middle,Rich";
             writer.write(dataRow);
@@ -317,7 +317,7 @@ public class Land {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        String csvFilePath2 = "WealthNum.csv";
+        String csvFilePath2 = "output/WealthNum.csv";
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(csvFilePath2, false))) {
             String dataRow = "Wealth,Population";
             writer.write(dataRow);
@@ -325,7 +325,7 @@ public class Land {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        String csvFilePath = "gini.csv";
+        String csvFilePath = "output/gini.csv";
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(csvFilePath, false))) {
             String dataRow = "Gini";
             writer.write(dataRow);

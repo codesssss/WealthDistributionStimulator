@@ -2,7 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 # 读取CSV文件
-df = pd.read_csv('WealthClassNum.csv')
+df = pd.read_csv('../output/WealthClassNum.csv')
 df['Iteration rounds'] = range(1, len(df) + 1)
 # 绘制折线图
 plt.figure(figsize=(10,6))
@@ -25,3 +25,6 @@ plt.title('Graph of order variation with iteration rounds')
 
 # 显示图表
 plt.show()
+
+plt.savefig('class.png')
+

@@ -2,7 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 # 读取csv文件
-df = pd.read_csv('gini.csv')
+df = pd.read_csv('../output/gini.csv')
 
 # 使用迭代次数作为x轴，基尼系数作为y轴
 plt.plot(df.index, df['gini'])
@@ -14,3 +14,5 @@ plt.ylabel('Gini Coefficient')
 
 # 显示图表
 plt.show()
+plt.savefig('gini.png')
+
