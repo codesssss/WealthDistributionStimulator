@@ -339,7 +339,7 @@ public class Land {
      * Adds a line to the WealthClassNum.CSV file with the wealth class information.
      */
     public void addWealthClassNumInCSV() {
-        String csvFilePath = "WealthClassNum.csv";
+        String csvFilePath = "output/WealthClassNum.csv";
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(csvFilePath, true))) {
             String dataRow = "" + this.poorNum + "," + this.middleNum + "," + this.richNum;
             writer.write(dataRow);
@@ -354,7 +354,7 @@ public class Land {
      * Adds a line to the WealthNumCSV file with the wealth information.
      */
     public void addWealthNumInCSV(double wealth){
-        String csvFilePath2 = "WealthNum.csv";
+        String csvFilePath2 = "output/WealthNum.csv";
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(csvFilePath2, true))) {
             String dataRow = ""+wealth+","+Params.POPULATION;
             writer.write(dataRow);
@@ -368,7 +368,7 @@ public class Land {
      * Open Gini CSV file and add the headline.
      */
     public void openGiniCSV() {
-        String csvFilePath = "gini.csv";
+        String csvFilePath = "output/gini.csv";
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(csvFilePath, false))) {
             String dataRow = "Gini_Coefficient";
             writer.write(dataRow);
