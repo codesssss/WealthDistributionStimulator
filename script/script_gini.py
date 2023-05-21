@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 df = pd.read_csv('../output/gini.csv')
 
 # 使用迭代次数作为x轴，基尼系数作为y轴
-plt.plot(df.index, df['gini'])
+plt.plot(df.index, df['Gini'])
 
 # 设置图表标题以及x，y轴标签
 plt.title('Gini Coefficient Over Iterations')

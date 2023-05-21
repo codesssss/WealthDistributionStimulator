@@ -2,6 +2,8 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import static java.util.Collections.sort;
 
@@ -399,25 +401,51 @@ public class Land {
      * @return the Gini coefficient
      */
     public double calculateGiniCoefficient() {
-        ArrayList<Double> wealth = new ArrayList<>();
+        List<Double> wealths = new ArrayList<>();
         for (Person person : people) {
-            wealth.add(person.getWealth());
+            wealths.add(person.getWealth());
         }
 
-        sort(wealth);
-        int length = wealth.size();
-        double cumulativeWealth = 0;
-        double cumulativeBase = 0;
-        for (int i = 1; i <= length; i++) {
-            cumulativeWealth += wealth.get(i - 1);
-            cumulativeBase += i;
+        Collections.sort(wealths);
+        wealths.add(0, 0.0);
+
+        int length = wealths.size();
+        List<Double> cumWealths = new ArrayList<>();
+        double cumulativeSum = 0.0;
+        for (Double wealth : wealths) {
+            cumulativeSum += wealth;
+            cumWealths.add(cumulativeSum);
         }
 
-        double B = cumulativeWealth / cumulativeBase;
-        double GiniCoefficient = 1 + 1.0 / length - 2 * B;
-        return GiniCoefficient;
+        List<Double> xArray = new ArrayList<>();
+        List<Double> yArray = new ArrayList<>();
+        double sumWealths = cumulativeSum;
+
+        for (int i = 0; i < length; i++) {
+            xArray.add(i / (double) (length - 1));
+            yArray.add(cumWealths.get(i) / sumWealths);
+        }
+
+        double B = trapz(yArray, xArray);
+        double A = 0.5 - B;
+
+        return A / (A + B);
     }
 
+    /**
+     * Used for calculate gradient integral
+     * @param y
+     * @param x
+     * @return
+     */
+    private static double trapz(List<Double> y, List<Double> x) {
+        double area = 0.0;
+        int size = y.size();
+        for (int i = 1; i < size; i++) {
+            area += 0.5 * (y.get(i) + y.get(i - 1)) * (x.get(i) - x.get(i - 1));
+        }
+        return area;
+    }
 
 
     /**
