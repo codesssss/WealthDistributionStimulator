@@ -12,17 +12,25 @@ public class Params {
      * Person Set
      */
 
-    // Maximum life expectancy
-    public static final int LIFE_EXPECTANCY_MAX = 83;
-
-    // Minimum life expectancy
-    public static final int LIFE_EXPECTANCY_MIN = 1;
-
+    // Population size
+    public static final int POPULATION = 250;
     // Maximum vision
     public static final int VISION_MAX = 5;
-
     // Maximum metabolism
     public static final int METABOLISM_MAX = 15;
+    // Maximum life expectancy
+    public static final int LIFE_EXPECTANCY_MAX = 83;
+    // Minimum life expectancy
+    public static final int LIFE_EXPECTANCY_MIN = 1;
+    // Percentage of best patches in the grid
+    // Between 0 and 1
+    public static final double PERCENTAGE_OF_BEST_PATCHES = 0.1;
+    //Grow grains every GRAIN_GROWTH_INTERVAL
+    // Minimum is 1
+    public static final int GRAIN_GROWTH_INTERVAL = 1;
+    // Number of grain grown per round
+    public static final int NUM_GRAIN_GROWN = 4;
+
 
     // Maximum initial wealth for a person
     public static final int PERSON_INIT_WEALTH_MAX = 25;
@@ -40,16 +48,13 @@ public class Params {
     // Maximum number of rows in the grid
     public static final int ROW_MAX = 50;
 
-    // Percentage of best patches in the grid
-    // Between 0 and 1
-    public static final double PERCENTAGE_OF_BEST_PATCHES = 0.1;
+
 
     // Percentage of diffusion from one patch to its neighbors
     // Between 0 and 1
     public static final double PERCENTAGE_OF_DIFFUSION = 0.25;
 
-    // Number of grain grown per round
-    public static final int NUM_GRAIN_GROWN = 4;
+
 
     // Boolean indicating whether to use a diffusive initialization model
     //If it is false. It would use random_model to init Patch
@@ -60,18 +65,16 @@ public class Params {
      */
 
     // Number of rounds in the simulation
-    public static final int ROUND_NUM = 1000;
+    public static final int ROUND_NUM = 1;
 
-    //Grow grains every GRAIN_GROWTH_INTERVAL
-    // Minimum is 1
-    public static final int GRAIN_GROWTH_INTERVAL = 1;
 
-    // Population size
-    public static final int POPULATION = 250;
+
+
+
 
     // Proportions of inheritance between parents and offspring
     // Between 0 and 1
-    public static final double INHERITANCE_PROPORTIONS = 0.5;
+    public static final double INHERITANCE_PROPORTIONS = 0;
 
 
     /**
